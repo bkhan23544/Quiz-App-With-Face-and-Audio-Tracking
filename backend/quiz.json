@@ -1,0 +1,91 @@
+{
+    "module": {
+      "organization":"Abc",
+      "project": "Cba",
+      "quiz_name": "Math Quiz",
+      "quiz_instruction":"Math quiz will take 5 minutes of your time to complete a set of questions which will help you to know how much you know about math quizzes and how much time you need to complete a set of math questions. ",
+      "category": "Def",
+      "section":"Fed",
+      "priority":"High",
+      "total_time":300
+    },
+    "questions": [
+      {"question_type":"text/image",
+        "number": 1,
+        "question": "Eighteen thousandths, written as a decimal, is:",
+        "options": [
+          {"text":"0.0018","image":"https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80"},
+          {"text":"0.018"},
+          {"text":"0.18","image":"https://media.gettyimages.com/photos/wazir-khan-mosque-lahore-punjab-pakistan-picture-id637623678?s=612x612"}
+        ],
+        "correct_choice": 1,
+        "time_allowed":35,
+        "labels":["abc","abec"]
+      },
+      {"question_type":"text/video",
+        "number": 2,
+        "question": "What is 121 times 11?",
+        "options": [
+          {"text":"1331","video":"http://techslides.com/demos/sample-videos/small.mp4"},
+          {"text":"1313"},
+          {"text":"1133"},
+          {"text":"3131"}
+        ],
+        "correct_choice": 1,
+        "time_allowed":85,
+        "labels":["abc","abec"]
+      },
+      {"question_type":"text",
+        "number": 3,
+        "question": "A car covers a distance of 200km in 2 hours 40 minutes, whereas a jeep covers the same distance in 2 hours. What is the ratio of their speed?",
+        "options": [
+          {"text":"4:3"},
+          {"text":"3:4"},
+          {"text":"4:5"},
+          {"text":"5:4"}
+        ],
+        "correct_choice": 2,
+        "time_allowed":50,
+        "labels":["abc","abec"]
+      },
+      {"question_type":"text/audio",
+        "number": 4,
+        "question": "A number is greater than 3 but less than 8. Also the number is greater than 6 but less than 10. What is the number?",
+        "options": [
+          {"text":"5","audio":"https://cdn.bitdegree.org/learn/I_Cactus_-_05_-_ruby_cactus.mp3?raw=true"},
+          {"text":"6"},
+          {"text":"7"},
+          {"text":"8"}
+        ],
+        "correct_choice": 3,
+        "time_allowed":70,
+        "labels":["abc","abec"]
+      },
+      {"question_type":"text",
+        "number": 5,
+        "question": "A clock reads 4:30. If the minute hand points East, in what direction will the hour hand point?",
+        "options": [
+          {"text":"North"},
+          {"text":"North-West"},
+          {"text":"South-East"},
+          {"text":"North-East"}
+        ],
+        "correct_choice": 4,
+        "time_allowed":60,
+        "labels":["abc","abec"]
+      },
+      {"question_type":"text",
+        "number": 6,
+        "question": "The sum of squares of two numbers is 80 and the square of difference between the two numbers is 36. Find the product of two numbers.",
+        "options": [
+          {"text":"11"},
+          {"text":"22"},
+          {"text":"33"},
+          {"text":"26"}
+        ],
+        "correct_choice": 2,
+        "time_allowed":60,
+        "labels":["abc","abec"]
+      } 
+    ]
+  }

@@ -1,0 +1,72 @@
+
+/*Face Style*/
+
+img{
+    box-shadow: 2px 2px 5px 0px #ccc;
+    border-radius: 10px;
+  }
+  
+#img:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+  
+#img:active{
+    box-shadow: none;
+}
+  
+  
+  #main {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+  
+  }
+  
+  canvas{
+    position: absolute;
+  }
+  
+  #video{
+  
+  }
+  
+  #instr-panel{
+    border:1px solid blue;
+  }
+  
+  #images{
+    border:1px solid green;
+  }
+  /* @media(min-width:850px){
+  #icons-side{
+    display: block !important
+  }
+  #icons-down{
+    display: none !important;
+  }
+  }
+  
+  @media(max-width:850px){
+    #icons-side{
+      display: none !important
+    }
+    #icons-down{
+      display: block !important;
+    }
+    } */
+  
+  /*OTP Style*/
+
+  .inputStyle {
+    width: 3rem !important;
+    height: 3rem;
+    margin: 0 1rem;
+    font-size: 2rem;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.3);
+  }
+
+  .error {
+    border: 1px solid red !important;
+  }
