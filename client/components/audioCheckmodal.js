@@ -119,6 +119,10 @@ const audioCheckModal=forwardRef((props,ref)=> {
 
 
     useEffect(() => {
+      if(props.ended){
+        cancelAnimationFrame(drawVisual)
+        }
+        else{
        navigator.webkitGetUserMedia({audio:true}, function(stream){
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioCtx.createAnalyser();
@@ -133,8 +137,8 @@ const audioCheckModal=forwardRef((props,ref)=> {
             dataArray = new Uint8Array(bufferLength);
         draw(bufferLength)                
             }, function(e){ console.log(e)})
-    },[])
-
+        }
+    },[props.ended])
 
 
     const draw=(bufferLength)=> {
@@ -198,6 +202,7 @@ const audioCheckModal=forwardRef((props,ref)=> {
         ctx.lineTo(canvas.width, canvas.height/2);
         ctx.stroke();
         drawVisual = requestAnimationFrame(draw)
+
 
     }
 

@@ -70,19 +70,14 @@ export default function Quiz({ finalObj }) {
     const [questions, setQuestions] = React.useState(finalObj.quiz)
     const [userAnswers, setUserAnswers] = React.useState([])
     const [quizEnd, setQuizEnd] = React.useState(false)
+    const [intervalEnds, setIntervalEnds] = React.useState(false)
     const [timeLeft, setTimeLeft] = React.useState(calculateTimeLeft());
     const countRef = useRef(perQuestionTime);
     countRef.current = perQuestionTime;
 
-
-
-
-
-
-
-    const handleChange = (e) => {
+const handleChange = (e) => {
         setSelectedValue(e.target.value)
-    }
+}
 
 const onNext=()=>{
     if(selectedValue){
@@ -109,7 +104,8 @@ gotoNext()
             answers.push(false)
             setUserAnswers(answers)
         }
-
+        const queryString = require('query-string');
+        const parsed = queryString.parse(window.location.search);
         if (current == questions.length - 1) {
             var objToSubmit = {
                 quiz_name: finalObj.module.quiz_name,
@@ -120,10 +116,14 @@ gotoNext()
                 project:finalObj.module.project,
                 score:userAnswers.filter(Boolean).length,
                 scoreArray:userAnswers,
-                email:localStorage.getItem("email")
+                email:parsed.email
             }
             console.log(objToSubmit,"Object To Submit")
             setQuizEnd(true)
+            setTimeout(() => {
+                setIntervalEnds(true)   
+            }, 50);
+            
         }
         else {
             setCurrent(current + 1)
@@ -172,9 +172,13 @@ gotoNext()
         }, 1000);
         // console.log(timeLeft, "t")
         setTimeout(() => {
-            setQuizEnd(true)
+            setQuizEnd(true)   
             clearTimeout(fulltimer)
             clearTimeout(questimer)
+            setTimeout(() => {
+                setIntervalEnds(true) 
+            }, 50);
+         
         }, finalObj.time * 1000+1000);
 
       
@@ -190,16 +194,16 @@ gotoNext()
 
     return (
         <div>
-            {quizEnd ? (<Paper className={classes.root} elevation={4}>
+            {quizEnd && <Paper className={classes.root} elevation={4}>
                 <Typography variant="h4" component="h4">Quiz has ended</Typography>
                 <Typography variant="h5">You Got {userAnswers.filter(Boolean).length} Out Of {questions.length}</Typography>
-            </Paper>)
-                : (
+            </Paper>}
+               
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
-                    <FaceModal/>
+                    {!intervalEnds && <FaceModal ended={quizEnd}/>}
                     </Grid>
-                    <Grid item xs={6}>
+                    {!quizEnd && <Grid item xs={6}>
                     <Paper className={classes.root} elevation={4}>
                      <div>
                         <Typography component="h5">
@@ -254,17 +258,18 @@ gotoNext()
                         </div>
                     </div>
                 </Paper>
-                </Grid>
+                </Grid>}
                 <Grid item xs={3}>
-                    <AudioModal/>
+                {!intervalEnds && <AudioModal ended={quizEnd}/>}
                 </Grid>
-                </Grid>)}
+                </Grid>
         </div>
     )
 }
 
 Quiz.getInitialProps = async (ctx) => {
-    const response = await axios('http://localhost:4000/getquiz',{method:"POST"});
+    var setting = require("../Settings/settings.json")
+    const response = await axios(`${setting.backend_url}/getquiz`,{method:"POST"});
     var finalObj = {time:response.data.module.total_time,quiz:response.data.questions,module:response.data.module}
     return { finalObj }
 }

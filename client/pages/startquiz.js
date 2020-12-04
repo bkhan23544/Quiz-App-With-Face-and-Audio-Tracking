@@ -37,6 +37,12 @@ export default function StartQuiz({finalObj}){
         }
     }
 
+    const handlePush=()=>{
+      const queryString = require('query-string');
+      const parsed = queryString.parse(window.location.search);
+      router.push(`/quiz?email=${parsed.email}`)
+    }
+
     
 
 
@@ -52,8 +58,8 @@ export default function StartQuiz({finalObj}){
                   <Typography variant="subtitle2" gutterBottom>
 Time to attempt: {Math.floor(finalObj.quizdetails.total_time/60)} Minutes
                   </Typography>
-               <Link href="/quiz">
           <Button
+          onClick={handlePush}
             type="submit"
             fullWidth
             variant="contained"
@@ -62,7 +68,6 @@ Time to attempt: {Math.floor(finalObj.quizdetails.total_time/60)} Minutes
           >
             Start Quiz
          </Button>
-          </Link>
 
           <Button
           onClick={exitQuiz}
@@ -81,7 +86,8 @@ Time to attempt: {Math.floor(finalObj.quizdetails.total_time/60)} Minutes
 }
 
 StartQuiz.getInitialProps = async (ctx) => {
-    const response = await axios('http://localhost:4000/getquizdetails',{method:"POST"});
+  var setting = require("../Settings/settings.json")
+  const response = await axios(`${setting.backend_url}/getquizdetails`,{method:"POST"});
     var finalObj = {quizdetails:response.data}
     return { finalObj }
 }

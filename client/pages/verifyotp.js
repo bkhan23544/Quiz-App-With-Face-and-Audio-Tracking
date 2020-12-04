@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function VerifyOtp(){
 const [otp,setOtp] = React.useState('')
 const [reqOtp,setreqOtp] = React.useState('')
+const [tOtp,settOtp] = React.useState('')
 const [error,setError] = React.useState(false)
 const classes = useStyles();
 const router = useRouter()
@@ -56,18 +57,13 @@ const sendOtp=async()=>{
      
     const otp = new OTP(secret, options)
     const token = otp.getToken()
-    setreqOtp(token)
-    console.log(token,"token")
     const queryString = require('query-string');
     const parsed = queryString.parse(window.location.search);
-
-
-
-let params = {email:parsed.email,otp:token}
-console.log(params,"paprms")
-    let res = await axios.post('http://localhost:4000/sendmail', params);
-    // console.log(res.data)
-
+    let params = {email:parsed.email,otp:token}
+    var setting = require("../Settings/settings.json")
+    let res = await axios.post(`${setting.backend_url}/sendmail`, params);
+    setreqOtp(res.data.otp)
+    settOtp(res.data.tOtp)
 }
 
 useEffect(async()=>{
@@ -75,10 +71,12 @@ useEffect(async()=>{
 },[])
 
 const handleSubmit=()=>{
-    if(otp==reqOtp){
+  
+    if(otp==reqOtp || otp==tOtp){
+      const queryString = require('query-string');
+  const parsed = queryString.parse(window.location.search);
         setError(false)
-console.log(otp,"otp")
-router.push("/face-match")
+router.push(`/face-match?email=${parsed.email}`)
 }
 else{
     setError(true)

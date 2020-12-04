@@ -313,7 +313,9 @@ export default function FaceMatch(props) {
         //     body: JSON.stringify(finalObj)
         //   })
         //   console.log(response.json(), "response");
-        router.push("/startquiz")
+        const queryString = require('query-string');
+        const parsed = queryString.parse(window.location.search);
+        router.push(`/startquiz?email=${parsed.email}`)
        
         
        

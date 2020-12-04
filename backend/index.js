@@ -3,6 +3,8 @@ const cors = require('cors')
 const sgMail = require('@sendgrid/mail')
 var bodyParser = require('body-parser')
 const settings = require('./settings.json')
+var otpGenerator = require('otp-generator')
+const PORT = process.env.PORT || 5000
  
 
 const app = express()
@@ -36,17 +38,20 @@ app.post('/getquizdetails',(req,res)=>{
 })
 
 app.post('/sendmail',(req,res)=>{
-   
+    var otp = otpGenerator.generate(4, { upperCase: false, specialChars: false,alphabets:false });
+    var email = req.body.email
+    var tOtp = "8787"
     const msg={
-        to:req.body.email,
+        to:email,
         from:"bcoder23544@gmail.com",
         subject:"OTP for Quiz App",
-        text:`Here's your OTP ${req.body.otp}`
+        text:`Here's your OTP ${otp}`
     }
+  
     console.log(msg,"msg")
     try{
     sgMail.send(msg)
-    res.send(req.body)
+    res.send({otp,email,tOtp})
 }
 catch(err){
     console.log(err)
@@ -58,6 +63,4 @@ catch(err){
 
 })
 
-app.listen(4000,()=>{
-    console.log("Listening on 4000")
-})
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))

@@ -115,14 +115,18 @@ function Face(props) {
           faceapi.draw.drawDetections(canvas, resizedDetections);
           faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
           handleInside(false)
-          const dist = faceapi.euclideanDistance([resizedDetections[0].landmarks.getRightEye()[0]._x, resizedDetections[0].landmarks.getRightEye()[0]._y], [resizedDetections[0].landmarks.getLeftEye()[0]._x, resizedDetections[0].landmarks.getLeftEye()[0]._y])
-          const slope = (resizedDetections[0].landmarks.getLeftEye()[0]._y - resizedDetections[0].landmarks.getRightEye()[0]._y) / (resizedDetections[0].landmarks.getLeftEye()[0]._x - resizedDetections[0].landmarks.getRightEye()[0]._x)
+          var nose = resizedDetections[0].landmarks.getNose()[6]
+          var jawleft = resizedDetections[0].landmarks.getJawOutline()[3]
+          var jawright = resizedDetections[0].landmarks.getJawOutline()[13]
+          const dist1 = faceapi.euclideanDistance([nose.x, nose.y], [jawleft.x,jawleft.y])
+          const dist2 = faceapi.euclideanDistance([nose.x, nose.y], [jawright.x,jawright.y])
+          const diff = Math.abs(dist2-dist1)  
           //checking if height and width are greater than 200px
           if ((resizedDetections[0].alignedRect.box.width > settings.minRes && resizedDetections[0].alignedRect.box.height > settings.minRes) || !settings.closeCheck) {
             handleClose(false)
             //checking if face is properly aligned.
-            if (((dist > settings.minEyeDist && dist < settings.maxEyeDist) && (slope > settings.minSlope && slope < settings.maxSlope)) || !settings.alignCheck) {
-              Promise.all([
+            if (diff<setting.alignDifference) {
+            Promise.all([
                 handleAlign(false)
               ])
                 .then(() => {

@@ -40,9 +40,10 @@ export default function QuizForm() {
     const handleChange = (event) => {
         setFields({ ...fields, [event.target.name]: event.target.value });
       };
-      localStorage.setItem("email",fields.email)
 
-      const handleSubmit=(e)=>{
+
+
+const handleSubmit=(e)=>{
 if(fields.name && fields.email){
 console.log({name:fields.name,email:fields.email})
 e.preventDefault()

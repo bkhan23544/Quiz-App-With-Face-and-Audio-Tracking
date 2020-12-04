@@ -41,9 +41,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+var interval;
 
-
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard({ended}) {
     const webcamRef = React.useRef(null);
     const mediaRecorderRef = React.useRef(null);
     const classes = useStyles();
@@ -54,8 +54,6 @@ export default function RecipeReviewCard() {
     const [capturing, setCapturing] = React.useState(false);
     const [recordedChunks, setRecordedChunks] = React.useState([]);
     const downloadRef = React.useRef(null);
-
-
 
 
     const handleStartCaptureClick = React.useCallback(() => {
@@ -79,14 +77,6 @@ export default function RecipeReviewCard() {
           if (data.size > 0) {
             setRecordedChunks((prev) => prev.concat(data));
               console.log(data,"blob")
-            //   const url = URL.createObjectURL(data);
-            //   const a = document.createElement("a");
-            //   document.body.appendChild(a);
-            //   a.style = "display: none";
-            //   a.href = url;
-            //   a.download = "react-webcam.webm";
-            //   a.click();
-            //   window.URL.revokeObjectURL(url);
             
           }
       
@@ -123,6 +113,12 @@ export default function RecipeReviewCard() {
     };
 
     useEffect(() => {
+        console.log(ended,"enede")
+        if(ended===true){
+            clearInterval(interval)
+            console.log("enede")
+            }
+            else{
         var setting = {}
         const queryString = require('query-string');
         const parsed = queryString.parse(window.location.search);
@@ -139,7 +135,9 @@ export default function RecipeReviewCard() {
 
             console.log(setting, "settings")
         }
-    }, [])
+    }
+      
+    },[ended])
 
 
 
@@ -161,8 +159,7 @@ export default function RecipeReviewCard() {
         const canvas = document.getElementById("canvas")
         const displaySize = { width: setting.vidWidth, height: setting.vidHeight };
         faceapi.matchDimensions(canvas, displaySize);
-var interval = setInterval(async () => {
-    
+    interval = setInterval(async () => {
     var t0 = performance.now()
         const detections = await faceapi
         .detectAllFaces(video.current.video, new faceapi.TinyFaceDetectorOptions()) //Face Detectors

@@ -1,5 +1,6 @@
 {
     "server_url":"https://asia-south1-cityairapp.cloudfunctions.net/general_test",
+    "backend_url":"https://afternoon-tundra-28981.herokuapp.com",
     "server_method":"POST",
     "api_key":"Abcd",
     "vidHeight":160,
